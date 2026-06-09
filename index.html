@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupolla Demon List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Lista oficial de Extreme Demons completados por el servidor de Discord Grupolla.">
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+
+    <header class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <img src="guayaba.png" alt="Guayaba" class="logo-icon">
+                <span class="logo-text">GRUPOLLA</span><span class="logo-accent">LIST</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#" class="active" id="nav-demon-list">DEMON LIST</a>
+                <a href="#" id="nav-leaderboard">LEADERBOARD</a>
+                <a href="#" class="hidden" id="add-level-nav-btn" style="color: #f1c40f; text-decoration: none;">AÑADIR NIVEL</a>
+                <a href="#" class="hidden" id="pending-nav-btn" style="color: #3498db; text-decoration: none;">PENDIENTES</a>
+                <a href="#" id="login-nav-btn" class="login-btn">LOGIN</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container" id="demon-list-view">
+        <!-- Sidebar with List -->
+        <aside class="sidebar glass-panel">
+            <div class="search-container">
+                <div class="search-bar">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" id="search-input" placeholder="Search level...">
+                </div>
+            </div>
+            
+            <div class="level-list" id="level-list">
+                <!-- Levels injected via JS -->
+            </div>
+        </aside>
+
+        <!-- Level Details (Main view) -->
+        <section class="level-details glass-panel" id="level-details">
+            <div class="details-placeholder">
+                <h2>Select a level</h2>
+                <p>Choose a level from the list to see the details.</p>
+            </div>
+            <div class="details-content hidden" id="details-content">
+                <div class="level-header">
+                    <h1 class="level-rank" id="detail-rank">#1</h1>
+                    <h2 class="level-title" id="detail-title">Level Name</h2>
+                </div>
+                
+                <div class="level-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Creator</span>
+                        <span class="meta-value" id="detail-creator">-</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Verifier</span>
+                        <span class="meta-value" id="detail-verifier">-</span>
+                    </div>
+                </div>
+                
+                <div class="video-container">
+                    <iframe id="detail-video" class="video-placeholder" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe>
+                    <div class="video-placeholder" id="detail-video-placeholder">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="play-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </div>
+                </div>
+                <div id="first-victor-container" style="text-align: center; margin-bottom: 2rem; display: none;">
+                    <h4 style="color: #f39c12; font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px;">First Victor de Grupolla</h4>
+                    <p id="first-victor-name" style="font-size: 1.2rem; font-weight: bold; margin-top: 5px; color: var(--text-main);"></p>
+                </div>
+                <div class="records-section">
+                    <div class="records-section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.8rem; text-align: left;">Records</h3>
+                            <p style="text-align: left; margin-top: 5px; color: var(--text-muted); font-size: 0.9rem;" id="records-subtitle">Cargando...</p>
+                        </div>
+                        <button id="add-record-btn" class="add-btn hidden">Enviar Récord</button>
+                    </div>
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>Record Holder</th>
+                                <th>Progress</th>
+                                <th>Video Proof</th>
+                            </tr>
+                        </thead>
+                        <tbody id="record-list">
+                            <!-- Records injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Leaderboard View -->
+    <main class="leaderboard-container hidden" id="leaderboard-view" style="max-width: 1000px; margin: 2rem auto; padding: 0 1rem; flex-grow: 1;">
+        <h1 style="font-family: var(--font-heading); font-size: 3rem; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 2px;">Leaderboard</h1>
+        <div class="glass-panel" style="padding: 0; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="background: var(--primary); color: white;">
+                        <th style="padding: 1.5rem; width: 10%;">Rank</th>
+                        <th style="padding: 1.5rem;">Player</th>
+                        <th style="padding: 1.5rem; text-align: center; width: 25%;">Demons Completed</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <tr><td colspan="3" style="text-align: center; padding: 3rem; color: var(--text-muted);">Cargando leaderboard...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <!-- Login / Register Modal -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <span class="close-btn" id="close-login">&times;</span>
+            <h2 id="modal-title">Iniciar Sesión</h2>
+            
+            <button class="discord-btn" onclick="window.location.href='/auth/discord'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066l.015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                </svg>
+                Continuar con Discord
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Record Modal -->
+    <div id="record-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <span class="close-btn" id="close-record">&times;</span>
+            <h2>Añadir Récord</h2>
+            <form id="record-form">
+                <div class="input-group">
+                    <label for="record-progress">Porcentaje (%)</label>
+                    <input type="number" id="record-progress" placeholder="e.g. 100" min="1" max="100" required>
+                </div>
+                <div class="input-group">
+                    <label>Prueba (URL o Archivo)</label>
+                    <div class="proof-options">
+                        <label><input type="radio" name="proof-type" value="url" checked> YouTube URL</label>
+                        <label><input type="radio" name="proof-type" value="file"> Archivo MP4</label>
+                    </div>
+                </div>
+                <div class="input-group" id="url-input-group">
+                    <input type="url" id="record-url" placeholder="https://youtube.com/...">
+                </div>
+                <div class="input-group hidden" id="file-input-group">
+                    <input type="file" id="record-file" accept="video/mp4">
+                </div>
+                <button type="submit" class="submit-btn">Añadir</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pending Records Modal -->
+    <div id="pending-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel" style="max-width: 600px;">
+            <span class="close-btn" id="close-pending">&times;</span>
+            <h2>Récords Pendientes</h2>
+            <div id="pending-list-container" style="max-height: 400px; overflow-y: auto;">
+                <ul class="record-list" id="pending-list">
+                    <!-- Pending records injected via JS -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Level Modal -->
+    <div id="add-level-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel">
+            <span class="close-btn" id="close-add-level">&times;</span>
+            <h2>Añadir Nivel</h2>
+            <form id="add-level-form">
+                <div class="input-group">
+                    <label for="new-level-rank">Rango (Rank #)</label>
+                    <input type="number" id="new-level-rank" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-level-name">Nombre del Nivel</label>
+                    <input type="text" id="new-level-name" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-level-creator">Creador</label>
+                    <input type="text" id="new-level-creator" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-level-verifier">Verificador</label>
+                    <input type="text" id="new-level-verifier" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-level-video">URL Video Base (Opcional)</label>
+                    <input type="url" id="new-level-video" placeholder="https://youtube.com/...">
+                </div>
+                <button type="submit" class="submit-btn">Añadir Nivel</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
