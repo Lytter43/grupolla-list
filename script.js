@@ -118,6 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         detailsContent.offsetHeight; /* trigger reflow */
         detailsContent.style.animation = null;
 
+        if (window.innerWidth <= 900) {
+            detailsContent.scrollIntoView({ behavior: 'smooth' });
+        }
+
         // Populate data
         dRank.textContent = `#${level.rank}`;
         dTitle.textContent = level.name;
@@ -235,6 +239,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeLogin = document.getElementById('close-login');
     const pendingNavBtn = document.getElementById('pending-nav-btn');
     const addLevelNavBtn = document.getElementById('add-level-nav-btn');
+
+    // Mobile Menu Logic
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
 
     // Check session on load
     async function checkAuth() {

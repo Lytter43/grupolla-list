@@ -678,16 +678,39 @@ h1, h2, h3, h4 {
 @media (max-width: 900px) {
     .main-container {
         grid-template-columns: 1fr;
-        grid-template-rows: 400px 1fr;
+        grid-template-rows: auto auto;
         height: auto;
+    }
+
+    .level-list {
+        max-height: 400px;
+    }
+
+    .nav-content {
+        flex-wrap: wrap;
+        position: relative;
     }
 
     .nav-links {
         display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--bg-darker);
+        padding: 1rem;
+        border-bottom: 1px solid var(--panel-border);
+        gap: 1rem;
+    }
+
+    .nav-links.active {
+        display: flex;
     }
 
     .mobile-menu-btn {
         display: block;
+        padding: 0.5rem;
     }
 
     .level-header {
