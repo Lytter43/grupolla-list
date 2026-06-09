@@ -154,31 +154,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (firstVictor) {
                 firstVictorContainer.style.display = 'block';
                 firstVictorName.textContent = firstVictor.player;
-                
-                // Show video if it's youtube url
-                if (firstVictor.proof && (firstVictor.proof.includes('youtube.com') || firstVictor.proof.includes('youtu.be'))) {
-                    detailVideoPlaceholder.style.display = 'none';
-                    detailVideo.style.display = 'block';
-                    detailVideo.src = getYouTubeEmbedUrl(firstVictor.proof);
-                } else {
-                    detailVideoPlaceholder.style.display = 'flex';
-                    detailVideo.style.display = 'none';
-                    detailVideo.src = '';
-                }
             } else {
                 firstVictorContainer.style.display = 'none';
                 firstVictorName.textContent = '';
-                
-                // Show base video if level has one, else placeholder
-                if (level.video_id) {
-                    detailVideoPlaceholder.style.display = 'none';
-                    detailVideo.style.display = 'block';
-                    detailVideo.src = getYouTubeEmbedUrl(level.video_id);
-                } else {
-                    detailVideoPlaceholder.style.display = 'flex';
-                    detailVideo.style.display = 'none';
-                    detailVideo.src = '';
-                }
+            }
+
+            // Always show base video if level has one, else placeholder
+            if (level.video_id) {
+                detailVideoPlaceholder.style.display = 'none';
+                detailVideo.style.display = 'block';
+                detailVideo.src = getYouTubeEmbedUrl(level.video_id);
+            } else {
+                detailVideoPlaceholder.style.display = 'flex';
+                detailVideo.style.display = 'none';
+                detailVideo.src = '';
             }
 
             dRecordList.innerHTML = '';
